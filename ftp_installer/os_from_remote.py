@@ -131,7 +131,7 @@ def remote_call( *args, **kwargs ):
             # problème d'accès au serveur FTP
             raise pe
 
-        except ( ftputil.error.TemporaryError, socket.error ), te:
+        except ( ftputil.error.TemporaryError, ftputil.error.FTPOSError, socket.error ), te:
             # Relancement de la commande
             # Lors d'une premiere exception
             # Ceci peut-etre du a un inactivite de
@@ -162,5 +162,5 @@ def remote_call( *args, **kwargs ):
         except Exception, undefined_e:
             # Erreurs non gérées spécifiquement
             # potentiellement peut donc lieu à un filtrage de l'exception
-            print >> sys.stderr, Fore.RED, undefined_e.__class__, pprint.pformat( undefined_e ), pprint.pformat( args ), pprint.pformat( kwargs ), Fore.RESET
+            print >> "Exception non cacthée dans les blocs précédents²", sys.stderr, Fore.RED, undefined_e.__class__, pprint.pformat( undefined_e ), pprint.pformat( args ), pprint.pformat( kwargs ), Fore.RESET
             raise
